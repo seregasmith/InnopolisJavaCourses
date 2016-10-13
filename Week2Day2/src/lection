@@ -1,0 +1,55 @@
+TOPIC: Сборщики
+
+***ANT***
+
+Заполняем файл build.xml, а именно описываем target и dependencies. Так же в этом файле можно описать свойста сборки
+(property).
+Недостатки:
+    1) быстро разрастающийся build.xml даже для маленьких проектов;
+    2) отсутствие контроля зависимостей.
+
+
+***КОНТРОЛЬ ЗАВИСИМОСТЕЙ***
+
+>>>Введение
+
+Каждая библиотека зафиксирована версией формата "nn.nn.nn"
+Например:
+1.0.1 - версия которая выполняет основной функционал, протестирована и подтверждена заказчиком. Далее идёт наращивание
+функционала.
+1.0.2 - SNAPSHOT - версия в стадии разработки. Не даёт гарантии, что API не поменяется внутри этой версии.
+
+Lifecycle (по-русски)
+Разработка -> Alpha -> Beta -> Release Candidate -> Release
+
+>>>Контроль завивисимостей
+
+group:artifact:version
+Например:
+ru.innopolis.course:ordNum:1.0.1
+Файлы хранятся в артифактори.
+
+***MAVEN***
+
+Имеет dependency management.
+Всё описывается в pom.xml.
+<dependencies>
+    <group:artifact:version>
+</dependencies>
+
+compile | runtime | test
+
+Жизненный цикл:
+compile -> test (unit-testing) -> package (jar/war/ear) -> integration test -> install -> deploy
+clean; site (задокументировать).
+Например:
+mvn install // проведет сквозь все этапы ЖЦ до этапа install.
+
+***GRADLE***
+
+Основан на DSL (Domain Specific Language) на основе Groovy (java-подобный язык).
+Единица сборки task.
+Когда выполняется gradle taskName строится граф зависимых задач и если внутри задачи не было изменений, то он
+пропускается.
+
+Plugin -  набор задач.

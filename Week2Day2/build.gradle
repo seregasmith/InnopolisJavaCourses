@@ -1,0 +1,35 @@
+group 'ru.innopolis.universuty'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+//    compile group: 'org.hibernate', name: 'hibernate-core', version: '3.6.7.Final'
+//    compile 'org.hibernate:hibernate-core:3.6.7.Final'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+//task compile << {
+//    println 'compiling source'
+//}
+//
+//task compileTest(dependsOn: compile) << {
+//    println 'compiling unit tests'
+//}
+//
+//task test(dependsOn: [compile, compileTest]) << {
+//    println 'running unit tests'
+//}
+//
+//task dist(dependsOn: [compile, test]) << {
+//    println 'building the distribution'
+//}

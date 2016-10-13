@@ -1,0 +1,10 @@
+2016-10-12 12:26:08,223 INFO [{{userName,Smith}{userRole,admin}}] Чётное: 2
+12:26:57,930 [main] INFO ru.innopolis.Main - Чётное: 2
+12:29:07,085 [main] INFO ru.innopolis.Main - Чётное: 2
+2016-10-12 12:30:11,779 INFO [{{userName,Smith}{userRole,admin}}] Чётное: 2
+12:30:32,503 [main] INFO ru.innopolis.Main - Чётное: 2
+Чётное: 2
+2016-10-12 12:31:27,614 INFO [{{userName,Smith}{userRole,admin}}] Чётное: 2
+2016-10-12 12:31:43,766 INFO [{{userName,Smith}{userRole,admin}}] Чётное: 2
+2016-10-12 12:31:58,301 INFO [{{userName,Smith}{userRole,admin}}] Чётное: 2
+2016-10-12 12:32:04,812 INFO [{{userName,Smith}{userRole,admin}}] Чётное: 2
