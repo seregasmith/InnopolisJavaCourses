@@ -1,21 +1,24 @@
 package ru.innopolis;
 
+import org.apache.commons.io.filefilter.WildcardFileFilter;
 import ru.innopolis.resource.Summator;
 import ru.innopolis.threading.ResourceReader;
 import ru.innopolis.threading.ThreadController;
 import ru.innopolis.threading.TotalWriter;
 import ru.innopolis.utils.Validator;
 
+import java.io.File;
+import java.io.FileFilter;
 import java.util.*;
 
 /**
  * Created by Smith on 12.10.2016.
  */
 public class Application {
-    Set<Thread> res_threads = new HashSet<>();  // there are threads that created by ResourceReader
-    Set<Thread> threads = new HashSet<>();      // there are all threads
-    List<String> files = new ArrayList<>();     // a list of filenames, given from args or manually asked from user
-    Validator validator = new Validator() {     // validator implementation. Only even positive number is valid.
+    private Set<Thread> res_threads = new HashSet<>();  // there are threads that created by ResourceReader
+    private List<Thread> threads = new ArrayList<>();      // there are all threads
+    private List<String> files = new ArrayList<>();     // a list of filenames, given from args or manually asked from user
+    private Validator validator = new Validator() {     // validator implementation. Only even positive number is valid.
         @Override
         public boolean isValid(Integer i) {
             return (i%2==0) && (i>0);
@@ -31,16 +34,16 @@ public class Application {
         }else {
             app.getFilenamesFromUser();
         }
+
+        app.threads.add(new Thread(new TotalWriter()));
+
         for(String filename : app.files){
             System.out.println(filename);   // TODO to logging
+            Thread thread = new Thread(new ResourceReader(filename, app.validator, controller));
+            app.res_threads.add(thread);
+            app.threads.add(thread);
         }
 
-        for(String filename : app.files){
-            app.res_threads.add(new Thread(new ResourceReader(filename, app.validator, controller)));
-        }
-
-        app.threads.addAll(app.res_threads);
-        app.threads.add(new Thread(new TotalWriter()));
 
         for(Thread thread : app.threads){
             thread.start();
@@ -53,7 +56,6 @@ public class Application {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.println(summator);
             }
         }
         for (Thread thread : app.threads){
@@ -71,6 +73,14 @@ public class Application {
      */
     private void getFilenamesFromArgs(String[] args) {
         for(String arg : args){
+            if(arg.endsWith("*")){
+                File dir = new File(".");
+                FileFilter fileFilter = new WildcardFileFilter(arg);
+                File[] files = dir.listFiles(fileFilter);
+                for (int i = 0; i < files.length; i++) {
+                    this.files.add(files[i].getAbsolutePath());
+                }
+            }
             this.files.add(arg.replace("\\","\\\\"));
         }
     }

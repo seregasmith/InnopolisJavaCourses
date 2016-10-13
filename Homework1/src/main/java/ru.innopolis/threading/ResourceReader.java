@@ -46,5 +46,6 @@ public class ResourceReader implements Runnable {
             }
         }
         controller.aThreadIsOver();
+        // TODO: 13.10.2016 log ending
     }
 }

@@ -4,24 +4,21 @@ package ru.innopolis.resource;
  * Created by Smith on 12.10.2016.
  */
 public class Summator {
-    private static Summator instance;
+    private static final Summator instance = new Summator();
 
     private Summator(){}
 
-    private int total;
+    private volatile int total;
+    private volatile int prev;
 
-    public void add(int value){
-        synchronized (this) {
-            total += value;
-        }
-        synchronized (this){
-            this.notifyAll();
-        }
+    public synchronized void add(int value){
+        total += value;
+        prev = value;
+        System.out.println("Added: " + value + "; Total:" + total);
+//        this.notify();
     }
 
     public static Summator getInstance() {
-        if(instance == null)
-            instance = new Summator();
         return instance;
     }
 
@@ -29,6 +26,7 @@ public class Summator {
     public String toString() {
         return "Summator{" +
                 "total=" + total +
+                ", prev_add=" + prev +
                 '}';
     }
 }

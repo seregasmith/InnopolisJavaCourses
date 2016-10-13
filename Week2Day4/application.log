@@ -23,3 +23,46 @@
 2016-10-13 10:40:54,131 INFO [{}] This is testIsHelloWorld
 2016-10-13 10:40:54,131 INFO [{}] This is @After method
 2016-10-13 10:40:54,134 INFO [{}] This is @AfterClass method
+2016-10-13 11:52:10,183 INFO [{}] Test handle
+2016-10-13 11:52:10,209 INFO [{}] This is testIsHelloWorld
+2016-10-13 11:57:43,609 INFO [{}] Test handle
+2016-10-13 11:57:43,618 INFO [{}] Method handle 16
+2016-10-13 11:57:43,620 INFO [{}] This is testIsHelloWorld
+2016-10-13 12:05:02,950 INFO [{}] before method
+2016-10-13 12:05:02,975 INFO [{}] Test handle
+2016-10-13 12:05:03,033 INFO [{}] Method handle 16
+2016-10-13 12:05:03,037 INFO [{}] before method
+2016-10-13 12:05:03,038 INFO [{}] This is testIsHelloWorld
+2016-10-13 12:05:16,534 INFO [{}] before method
+2016-10-13 12:05:16,562 INFO [{}] Test handle
+2016-10-13 12:05:16,615 INFO [{}] Method handle 0
+2016-10-13 12:05:16,624 INFO [{}] before method
+2016-10-13 12:05:16,624 INFO [{}] This is testIsHelloWorld
+2016-10-13 12:06:42,254 INFO [{}] before method
+2016-10-13 12:06:42,282 INFO [{}] Test handle
+2016-10-13 12:06:42,362 INFO [{}] before method
+2016-10-13 12:06:42,362 INFO [{}] This is testIsHelloWorld
+2016-10-13 12:07:24,146 INFO [{}] before method
+2016-10-13 12:07:24,158 INFO [{}] Test handle
+2016-10-13 12:07:24,178 INFO [{}] Method handle 16
+2016-10-13 12:07:24,179 INFO [{}] before method
+2016-10-13 12:07:24,180 INFO [{}] This is testIsHelloWorld
+2016-10-13 12:07:32,960 INFO [{}] before method
+2016-10-13 12:07:32,974 INFO [{}] Test handle
+2016-10-13 12:07:32,993 INFO [{}] Method handle 16
+2016-10-13 12:07:32,995 INFO [{}] before method
+2016-10-13 12:07:32,995 INFO [{}] This is testIsHelloWorld
+2016-10-13 12:07:42,166 INFO [{}] before method
+2016-10-13 12:07:42,178 INFO [{}] Test handle
+2016-10-13 12:07:42,201 INFO [{}] before method
+2016-10-13 12:07:42,201 INFO [{}] This is testIsHelloWorld
+2016-10-13 12:09:04,918 INFO [{}] before method
+2016-10-13 12:09:04,930 INFO [{}] Test handle
+2016-10-13 12:09:04,948 INFO [{}] Method handle 16
+2016-10-13 12:09:04,949 INFO [{}] before method
+2016-10-13 12:09:04,950 INFO [{}] This is testIsHelloWorld
+2016-10-13 12:11:23,807 INFO [{}] before method
+2016-10-13 12:11:23,820 INFO [{}] Test handle
+2016-10-13 12:11:23,839 INFO [{}] Method handle 0
+2016-10-13 12:11:23,842 INFO [{}] before method
+2016-10-13 12:11:23,843 INFO [{}] This is testIsHelloWorld

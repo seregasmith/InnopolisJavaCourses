@@ -1,21 +1,29 @@
 package ru.innopolis;
 
 import org.apache.log4j.Logger;
+import org.jmock.Expectations;
+import org.jmock.Mockery;
+import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.*;
 import org.slf4j.LoggerFactory;
+import ru.innopolis.streams.StreamWriter;
 
 
 /**
  * Created by Smith on 13.10.2016.
  */
 public class HelloWorldTest {
-    private HelloWorld hw = new HelloWorld();
+    private Mockery context;
+    private HelloWorld hw;
     private static org.slf4j.Logger logger = LoggerFactory.getLogger(HelloWorldTest.class);
 
-    @BeforeClass
-    public static void beforeTest(){
-        logger.info("This is @BeforeClass method");
+    @Before
+    public void before(){
+        logger.info("before method");
+        this.hw = new HelloWorld();
+        this.context = new JUnit4Mockery();
     }
+
 
     @Test
     public void testIsHelloWorld(){
@@ -23,18 +31,16 @@ public class HelloWorldTest {
         Assert.assertTrue(hw.isHelloWorld("Hello world"));
     }
 
-    @Before
-    public void before(){
-        logger.info("This is @Before method");
+    @Test
+    public void testHandle(){
+        logger.info("Test handle");
+        StreamWriter streamWriter = context.mock(StreamWriter.class);
+        context.checking(new Expectations(){{
+            oneOf(streamWriter).write("Tatarstan");
+            will(returnValue(new Long(16)));
+        }});
+        hw.setStreamWriter(streamWriter);
+        Assert.assertEquals(new Long(16), hw.handle("Tatarstan"));
     }
 
-    @After
-    public void after(){
-        logger.info("This is @After method");
-    }
-
-    @AfterClass
-    public static void afterTest(){
-        logger.info("This is @AfterClass method");
-    }
 }

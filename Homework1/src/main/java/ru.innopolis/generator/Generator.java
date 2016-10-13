@@ -14,6 +14,8 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class Generator {
     public static final String OUTPUT_DIR = "C:\\Temp\\";
+    public static final String FILE_PREFIX = "file";
+    public static final String FILE_POSTFIX = ".txt";
     public static final int FILES_COUNT = 100;
     public static final int MAX_STRING_COUNT = 1000;
     public static final int MIN_STRING_COUNT = 100;
@@ -36,15 +38,26 @@ public class Generator {
 
     private static void generateFile(int i) throws IOException {
         int strings_count = ThreadLocalRandom.current().nextInt(MIN_STRING_COUNT, MAX_STRING_COUNT + 1);
+        List<String> strings = new ArrayList<>();
         for(int ind = 0; i < strings_count; i++){
             int values_count = ThreadLocalRandom.current().nextInt(MIN_VALUES_PER_STRING, MAX_VALUES_PER_STRING + 1);
-            List<String> strings = new ArrayList<>();
-            Files.write(Paths.get(String.valueOf(ind)), strings);
+            String string = "";
+            for(int val_ind = 0; val_ind < values_count; val_ind++){
+                int value = ThreadLocalRandom.current().nextInt(MIN_VALUE,MAX_VALUE + 1);
+                string += value;
+                if(val_ind != values_count - 1){
+                    string += " ";
+                }
+            }
+            strings.add(string);
         }
+
+        String file_path = OUTPUT_DIR + FILE_PREFIX + String.valueOf(i) + FILE_POSTFIX;
+        Files.write(Paths.get(file_path), strings);
     }
 
     private static void checkOutputDir() {
-        if (Files.notExists(OUTPUT_DIR)) {
+        if ( Files.notExists( Paths.get(OUTPUT_DIR) ) ) {
             // create dir
             new File(OUTPUT_DIR).mkdir();
         }else{
