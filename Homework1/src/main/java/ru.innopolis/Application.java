@@ -2,6 +2,7 @@ package ru.innopolis;
 
 import ru.innopolis.resource.Summator;
 import ru.innopolis.threading.ResourceReader;
+import ru.innopolis.threading.ThreadController;
 import ru.innopolis.threading.TotalWriter;
 import ru.innopolis.utils.Validator;
 
@@ -23,6 +24,7 @@ public class Application {
 
     public static void main(String[] args) {
         Application app = new Application(); // init app
+        ThreadController controller = new ThreadController();
         Summator summator = Summator.getInstance(); // expected that getInstance create new instance.
         if(args.length > 0){
             app.getFilenamesFromArgs(args);
@@ -34,7 +36,7 @@ public class Application {
         }
 
         for(String filename : app.files){
-            app.res_threads.add(new Thread(new ResourceReader(filename, app.validator)));
+            app.res_threads.add(new Thread(new ResourceReader(filename, app.validator, controller)));
         }
 
         app.threads.addAll(app.res_threads);
@@ -45,9 +47,9 @@ public class Application {
         }
 
         while(!app.isResourcesThreadsFinished()){
-            synchronized (summator) {
+            synchronized (controller) {
                 try {
-                    summator.wait();
+                    controller.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -57,7 +59,7 @@ public class Application {
         for (Thread thread : app.threads){
             thread.interrupt();
         }
-        System.out.println("BUY");
+        System.out.println("BUY"); // TODO: 13.10.2016 log it
     }
 
     /**

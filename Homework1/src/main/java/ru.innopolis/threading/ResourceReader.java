@@ -16,14 +16,17 @@ import java.util.List;
 public class ResourceReader implements Runnable {
     private Validator validator;
     private final String filename;
+    private final ThreadController controller;
 
-    public ResourceReader(String filename){
+    public ResourceReader(String filename, ThreadController controller){
         this.filename = filename;
+        this.controller = controller;
     }
 
-    public ResourceReader(String filename, Validator validator){
+    public ResourceReader(String filename, Validator validator, ThreadController controller){
         this.filename = filename;
         this.validator = validator;
+        this.controller = controller;
     }
 
 
@@ -42,5 +45,6 @@ public class ResourceReader implements Runnable {
                 }
             }
         }
+        controller.aThreadIsOver();
     }
 }

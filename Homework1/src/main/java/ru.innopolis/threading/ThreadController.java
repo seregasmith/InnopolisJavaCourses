@@ -5,6 +5,8 @@ package ru.innopolis.threading;
  */
 public class ThreadController {
     public void aThreadIsOver(){
-        this.notifyAll();
+        synchronized (this) {
+            this.notifyAll();
+        }
     }
 }
