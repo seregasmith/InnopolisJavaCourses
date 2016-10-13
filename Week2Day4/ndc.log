@@ -1,0 +1,10 @@
+2016-10-13 10:32:06,422 INFO [{}] This is @BeforeClass method
+2016-10-13 10:32:06,431 INFO [{}] This is @Before method
+2016-10-13 10:32:06,431 INFO [{}] This is testIsHelloWorld
+2016-10-13 10:32:06,431 INFO [{}] This is @After method
+2016-10-13 10:32:06,434 INFO [{}] This is @AfterClass method
+2016-10-13 10:37:12,435 INFO [{}] This is @BeforeClass method
+2016-10-13 10:37:12,446 INFO [{}] This is @Before method
+2016-10-13 10:37:12,447 INFO [{}] This is testIsHelloWorld
+2016-10-13 10:37:12,447 INFO [{}] This is @After method
+2016-10-13 10:37:12,449 INFO [{}] This is @AfterClass method

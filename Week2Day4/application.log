@@ -1,0 +1,25 @@
+2016-10-13 10:39:25,755 INFO [{}] This is @BeforeClass method
+2016-10-13 10:39:25,769 INFO [{}] This is @Before method
+2016-10-13 10:39:25,769 INFO [{}] This is testIsHelloWorld
+2016-10-13 10:39:25,769 INFO [{}] This is @After method
+2016-10-13 10:39:25,774 INFO [{}] This is @AfterClass method
+2016-10-13 10:39:39,014 INFO [{}] This is @BeforeClass method
+2016-10-13 10:39:39,037 INFO [{}] This is @Before method
+2016-10-13 10:39:39,037 INFO [{}] This is testIsHelloWorld
+2016-10-13 10:39:39,038 INFO [{}] This is @After method
+2016-10-13 10:39:39,042 INFO [{}] This is @AfterClass method
+2016-10-13 10:40:50,158 INFO [{}] This is @BeforeClass method
+2016-10-13 10:40:50,169 INFO [{}] This is @Before method
+2016-10-13 10:40:50,170 INFO [{}] This is testIsHelloWorld
+2016-10-13 10:40:50,170 INFO [{}] This is @After method
+2016-10-13 10:40:50,174 INFO [{}] This is @AfterClass method
+2016-10-13 10:40:52,142 INFO [{}] This is @BeforeClass method
+2016-10-13 10:40:52,156 INFO [{}] This is @Before method
+2016-10-13 10:40:52,156 INFO [{}] This is testIsHelloWorld
+2016-10-13 10:40:52,156 INFO [{}] This is @After method
+2016-10-13 10:40:52,158 INFO [{}] This is @AfterClass method
+2016-10-13 10:40:54,119 INFO [{}] This is @BeforeClass method
+2016-10-13 10:40:54,130 INFO [{}] This is @Before method
+2016-10-13 10:40:54,131 INFO [{}] This is testIsHelloWorld
+2016-10-13 10:40:54,131 INFO [{}] This is @After method
+2016-10-13 10:40:54,134 INFO [{}] This is @AfterClass method
