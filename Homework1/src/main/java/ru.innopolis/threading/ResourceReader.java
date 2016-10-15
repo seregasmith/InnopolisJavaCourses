@@ -1,51 +1,57 @@
 package ru.innopolis.threading;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
+import ru.innopolis.resource.Resource;
 import ru.innopolis.resource.Summator;
-import ru.innopolis.utils.Utils;
+import ru.innopolis.utils.LogUtils;
 import ru.innopolis.utils.Validator;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
 
 /**
+ * Thread behavior.
+ * A task to get value from resource abstraction and decide what to do with it.
  * Created by Smith on 12.10.2016.
  */
 public class ResourceReader implements Runnable {
+    private static Logger logger = LoggerFactory.getLogger(ResourceReader.class);
     private Validator validator;
-    private final String filename;
-    private final ThreadController controller;
+    private Resource<Integer> resource;
 
-    public ResourceReader(String filename, ThreadController controller){
-        this.filename = filename;
-        this.controller = controller;
+    {
+        MDC.put(LogUtils.PACKAGE_KEY, ResourceReader.class.getPackage().getName());
+        MDC.put(LogUtils.CLASS_KEY, ResourceReader.class.getSimpleName());
     }
 
-    public ResourceReader(String filename, Validator validator, ThreadController controller){
-        this.filename = filename;
+    public ResourceReader(Resource<Integer> resource, Validator validator) {
         this.validator = validator;
-        this.controller = controller;
+        this.resource = resource;
     }
+
+
 
 
     public void run() {
-        List<String> lines = null;
-        try {
-            lines = Files.readAllLines(Paths.get(filename), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace(); // TODO set logging
-        }
-        for(String line: lines){
-            Integer[] values = Utils.getIntegersFormLine(line);
-            for(Integer i : values){
-                if(validator.isValid(i)){
-                    Summator.getInstance().add(i);
+        MDC.put(LogUtils.METHOD_KEY, "run()");
+        logger.info("{} for {} is started.",ResourceReader.class.getName(),resource);
+        Integer value = null;
+        while (!Thread.currentThread().isInterrupted()){
+            try {
+                value = resource.nextValue();
+                if(value == null)
+                    break;
+                if(validator.isValid(value)){
+                    Summator.getInstance().add(value);
                 }
+            } catch (Exception e) {
+                logger.error("Exception: Message: {}, StackTrace: {}", e.getMessage(), e.getStackTrace());
+                ThreadsController.getInstance().interruptAll();
             }
         }
-        controller.aThreadIsOver();
-        // TODO: 13.10.2016 log ending
+        synchronized (this) {
+            logger.info("{} for {} is over.", ResourceReader.class.getName(), resource);
+            ThreadsController.getInstance().notifyAThreadIsOver(this);
+        }
     }
 }

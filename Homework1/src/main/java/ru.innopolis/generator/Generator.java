@@ -10,6 +10,7 @@ import java.util.StringJoiner;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
+ * There's a script for generation right files for the task
  * Created by Smith on 13.10.2016.
  */
 public class Generator {
@@ -39,7 +40,7 @@ public class Generator {
     private static void generateFile(int i) throws IOException {
         int strings_count = ThreadLocalRandom.current().nextInt(MIN_STRING_COUNT, MAX_STRING_COUNT + 1);
         List<String> strings = new ArrayList<>();
-        for(int ind = 0; i < strings_count; i++){
+        for(int ind = 0; ind < strings_count; ind++){
             int values_count = ThreadLocalRandom.current().nextInt(MIN_VALUES_PER_STRING, MAX_VALUES_PER_STRING + 1);
             String string = "";
             for(int val_ind = 0; val_ind < values_count; val_ind++){

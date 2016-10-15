@@ -1,67 +1,50 @@
 package ru.innopolis;
 
 import org.apache.commons.io.filefilter.WildcardFileFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ru.innopolis.resource.FileResource;
 import ru.innopolis.resource.Summator;
 import ru.innopolis.threading.ResourceReader;
-import ru.innopolis.threading.ThreadController;
+import ru.innopolis.threading.ThreadsController;
 import ru.innopolis.threading.TotalWriter;
 import ru.innopolis.utils.Validator;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 /**
  * Created by Smith on 12.10.2016.
  */
 public class Application {
-    private Set<Thread> res_threads = new HashSet<>();  // there are threads that created by ResourceReader
-    private List<Thread> threads = new ArrayList<>();      // there are all threads
+    private static Logger logger = LoggerFactory.getLogger(Application.class);
     private List<String> files = new ArrayList<>();     // a list of filenames, given from args or manually asked from user
-    private Validator validator = new Validator() {     // validator implementation. Only even positive number is valid.
-        @Override
-        public boolean isValid(Integer i) {
-            return (i%2==0) && (i>0);
-        }
-    };
+    private Validator validator = i -> (i%2==0) && (i>0);
 
-    public static void main(String[] args) {
-        Application app = new Application(); // init app
-        ThreadController controller = new ThreadController();
-        Summator summator = Summator.getInstance(); // expected that getInstance create new instance.
+    public Application(String[] args){
         if(args.length > 0){
-            app.getFilenamesFromArgs(args);
+            getFilenamesFromArgs(args);
         }else {
-            app.getFilenamesFromUser();
+            getFilenamesFromUser();
         }
+    }
 
-        app.threads.add(new Thread(new TotalWriter()));
-
-        for(String filename : app.files){
-            System.out.println(filename);   // TODO to logging
-            Thread thread = new Thread(new ResourceReader(filename, app.validator, controller));
-            app.res_threads.add(thread);
-            app.threads.add(thread);
+    public void run(){
+        Summator summator = Summator.getInstance();
+        TotalWriter totalWriter = new TotalWriter();
+        summator.addObserver(totalWriter);
+        ThreadsController.getInstance().addDaemon(new Thread(totalWriter));
+        new Thread(ThreadsController.getInstance()).start();
+        ThreadsController.getInstance().startDaemons();
+        for(String filename : files){
+            logger.info("File as argument: {}", filename);
+            Thread thread = new Thread(new ResourceReader(new FileResource<>(filename), validator));
+            ThreadsController.getInstance().addThread(thread);
         }
-
-
-        for(Thread thread : app.threads){
-            thread.start();
-        }
-
-        while(!app.isResourcesThreadsFinished()){
-            synchronized (controller) {
-                try {
-                    controller.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        for (Thread thread : app.threads){
-            thread.interrupt();
-        }
-        System.out.println("BUY"); // TODO: 13.10.2016 log it
+        ThreadsController.getInstance().startAll();
     }
 
     /**
@@ -95,12 +78,9 @@ public class Application {
         getFilenamesFromArgs(args);
     }
 
-    private boolean isResourcesThreadsFinished() {
-        for(Thread res_thread : res_threads){
-            if (res_thread.isAlive() && !res_thread.isInterrupted())
-                return false;
-        }
-        return true;
+    public static void main(String[] args) {
+        Application app = new Application(args); // init app
+        app.run();
     }
 
 }
